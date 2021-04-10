@@ -3,7 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap'
 import {IModal} from '../../interface/modal/modal'
 
 const CreateModal: React.FC<IModal> = props => {
-  let {title, show,handleSubmit, handleClose, children} = props
+  let {buttonName, title, show,handleSubmit, handleClose, children} = props
   
   return (
     <div>
@@ -24,7 +24,7 @@ const CreateModal: React.FC<IModal> = props => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleSubmit}>Submit</Button>
+            <Button variant="primary" onClick={handleSubmit}>{buttonName}</Button>
           </Modal.Footer>
         </Form>
       </Modal>

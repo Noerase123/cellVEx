@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
-import { Modal, Button, Form } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import FormVal from '../form/FormVal'
 import CreateModal from '../modal/CreateModal'
+import DropDown from '../dropdown/DropDown'
+import { useHistory } from "react-router-dom";
 
 interface ICreate {
   addMethod: (params: any) => void
 }
 
 const CreateInput: React.FC<ICreate> = props => {
+  let history = useHistory()
   let {addMethod} = props
 
   //modal open/close
@@ -34,7 +37,12 @@ const CreateInput: React.FC<ICreate> = props => {
       "nutrition": nutriLink
     }
     try {
-      const response = await addMethod(payload)
+      await addMethod(payload)
+      setName("")
+      setPrice("")
+      setQuantity("")
+      setType("")
+      setNutriLink("")
     }
     catch (error) {
       console.log(error)
@@ -49,7 +57,8 @@ const CreateInput: React.FC<ICreate> = props => {
       </Button>
 
       <CreateModal
-        title="Add Item"
+        buttonName="Submit"
+        title="Add Food"
         show={show}
         handleSubmit={handleSubmit}
         handleClose={handleClose}
@@ -75,12 +84,12 @@ const CreateInput: React.FC<ICreate> = props => {
               value={quantity}
               onchange={event => setQuantity(event.target.value)}
             />
-            <FormVal
+            <DropDown
               label="Type"
-              type="text"
-              placeholder="Enter type"
-              value={type}
+              default_item="Select Type"
+              items={["Fruits", "Vegetables", "Meat", "Snacks"]}
               onchange={event => setType(event.target.value)}
+              value={type}
             />
             <FormVal
               label="Nutrition Link"

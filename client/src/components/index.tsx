@@ -5,11 +5,12 @@ import Header from './header/Header'
 import CreateInput from './create/Create'
 import TableData from './table/TableData'
 import { IData } from '../interface/tableData/tabledata'
-import { foodList, addFood, updateFood, deleteFood } from '../server/api/foodServices'
+import { foodList, addFood } from '../server/api/foodServices'
+import background from '../bg.jpg'
 
 const Home: React.FC = () => {
 
-  const [data,setData] = useState<IData[]>([])
+  const [data, setData] = useState<IData[]>([])
 
   const fetchFood = async () => {
     try {  
@@ -22,19 +23,29 @@ const Home: React.FC = () => {
   }
   useEffect(() => {
     fetchFood()
-  },[])
+  }, [])
+
+  let fontStyle = {
+    fontFamily: '"Times New Roman", Times, serif'
+  }
+  let bgStyle = {
+    width: 1350,
+    height: 200,
+    opacity: 0.6
+  }
 
   return (
-    <div>
+    <div style={fontStyle}>
       <NavHeader title="CRUD"/>
+        <img src={background} style={bgStyle}/>
       <Content>
         <Header title="Food List">
           <CreateInput addMethod={addFood}/>
         </Header>
         <TableData
           data={data}
-          updateMethod={updateFood}
-          deleteMethod={deleteFood}
+          // updateMethod={updateFood}
+          // deleteMethod={deleteFood}
         />
       </Content>
     </div>

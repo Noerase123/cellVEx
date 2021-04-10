@@ -3,7 +3,7 @@ import {Form} from 'react-bootstrap'
 import {IForm} from '../../interface/formval/FormVal'
 
 const FormVal: React.FC<IForm> = props => {
-  let {label, type, placeholder, value, onchange} = props
+  let {label, type, placeholder, value, onchange, disabled} = props
   return (
     <div>
       <Form.Group>
@@ -13,6 +13,7 @@ const FormVal: React.FC<IForm> = props => {
           placeholder={placeholder}
           value={value}
           onChange={onchange}
+          disabled={disabled}
         />
       </Form.Group>
     </div>

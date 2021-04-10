@@ -10,7 +10,7 @@ const Content: React.FC<IContainer> = props => {
   return (
     <div>
       <Container>
-        <div style={{marginTop:50}}>
+        <div style={{marginTop:20}}>
           {children}
         </div>
       </Container>

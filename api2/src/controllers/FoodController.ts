@@ -2,7 +2,7 @@ import StatusCodes from 'http-status-codes'
 import { Request, Response } from 'express'
 import {paramMissingError} from '@shared/constants'
 const { BAD_REQUEST, CREATED, OK } = StatusCodes
-import { getAllData, setData } from '../firestore/methods'
+import { getAllData, setData, getOneData, updateData, deleteData } from '../firestore/methods'
 
 /**
  * Get List of items
@@ -25,7 +25,11 @@ export const getAll = async (req: Request, res: Response) => {
  * @returns
  */
 export const addItem = async (req: Request, res: Response) => {
-  // const {doc} = req.query
+  if (req.body.name === null) {
+    return res.status(BAD_REQUEST).json({
+      message: paramMissingError
+    })
+  }
   await setData(req.body.name,req.body)
   return res.status(CREATED).json({
     message: "Item Added Successfully"
@@ -40,9 +44,9 @@ export const addItem = async (req: Request, res: Response) => {
  * @returns
  */
 export const getOne = async (req: Request, res: Response) => {
-  return res.status(OK).json({
-    message: "Get One from List of Item"
-  })
+  const data = await getOneData(req.params.id)
+  let getData = data.data()
+  return res.status(OK).json(getData)
 }
 
 /**
@@ -53,6 +57,12 @@ export const getOne = async (req: Request, res: Response) => {
  * @returns
  */
 export const updateItem = async (req: Request, res: Response) => {
+  if (req.params.id === null) {
+    return res.status(BAD_REQUEST).json({
+      message: paramMissingError
+    })
+  }
+  await updateData(req.params.id, req.body)
   return res.status(OK).json({
     message: "Item Updated Successfully"
   })
@@ -66,6 +76,12 @@ export const updateItem = async (req: Request, res: Response) => {
  * @returns
  */
 export const deleteOneItem = async (req: Request, res: Response) => {
+  if (req.params.id === null) {
+    return res.status(BAD_REQUEST).json({
+      message: paramMissingError
+    })
+  }
+  await deleteData(req.params.id)
   return res.status(OK).json({
     message: "Item Deleted Successfully"
   })

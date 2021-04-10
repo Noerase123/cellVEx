@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import {Navbar} from 'react-bootstrap'
 
 interface INavHeader {
@@ -10,7 +11,9 @@ const NavHeader: React.FC<INavHeader> = props => {
   return (
     <div>
       <Navbar bg="light">
-        <Navbar.Brand href="#home">{ title }</Navbar.Brand>
+        <Link to="/">
+          <Navbar.Brand href="">{ title }</Navbar.Brand>
+        </Link>
       </Navbar>
     </div>
   )
