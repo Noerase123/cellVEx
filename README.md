@@ -1,4 +1,4 @@
-> client
+*> client
     > React + Typescript
     > Server
       > Firebase API = FoodService
