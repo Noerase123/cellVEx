@@ -8,7 +8,7 @@ import { updateFood, deleteFood } from '../server/api/foodServices'
 import { IData } from '../interface/tableData/tabledata'
 import Skeleton from 'react-loading-skeleton'
 import { useHistory } from "react-router-dom";
-import { Recipe } from '../server/vendor/foodRecipe'
+import { Facts } from '../server/vendor/foodFacts'
 import DropDown from './dropdown/DropDown'
   
 const UpdatePage: React.FC = () => {
@@ -58,7 +58,7 @@ const UpdatePage: React.FC = () => {
   
   const implementVendorData = async () => {
     try {
-      const response = await Recipe(data.nutrition+' ' + data.quantity + ' ' + data.name + '?')
+      const response = await Facts(data.nutrition+' ' + data.quantity + ' ' + data.name + '?')
       if (response.data === undefined) {
         setEAnswer("No Data");
         setEImage("No");

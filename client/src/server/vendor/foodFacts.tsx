@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const Recipe = async (params: string) => {
+export const Facts = async (params: string) => {
   
   return await axios.request({
     method: 'GET',

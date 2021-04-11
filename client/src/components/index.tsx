@@ -4,7 +4,7 @@ import NavHeader from './navheader/NavHeader'
 import Header from './header/Header'
 import CreateInput from './create/Create'
 import TableData from './table/TableData'
-import { IData } from '../interface/tableData/tabledata'
+import { IData, arrCol } from '../interface/tableData/tabledata'
 import { foodList, addFood } from '../server/api/foodServices'
 import background from '../bg.jpg'
 
@@ -44,8 +44,7 @@ const Home: React.FC = () => {
         </Header>
         <TableData
           data={data}
-          // updateMethod={updateFood}
-          // deleteMethod={deleteFood}
+          column={arrCol}
         />
       </Content>
     </div>

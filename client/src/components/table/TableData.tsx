@@ -1,20 +1,18 @@
 import React from 'react'
 import {Link, useHistory} from 'react-router-dom'
 import { Table, Button, Spinner, InputGroup, FormControl } from 'react-bootstrap'
-import { IData, arrCol } from '../../interface/tableData/tabledata'
+import { IData } from '../../interface/tableData/tabledata'
 import CreateModal from '../modal/CreateModal'
 import { deleteFood } from '../../server/api/foodServices'
-import './data.js'
 
 interface ITable {
   data: IData[]
-  // updateMethod: (params: any) => void
-  // deleteMethod: (params: any) => void
+  column: string[]
 }
 
 const TableData: React.FC<ITable> = props => {
   let history = useHistory()
-  let { data } = props
+  let { data, column } = props
   var count = 1
 
   let params = new URLSearchParams(document.location.search)
@@ -48,7 +46,15 @@ const TableData: React.FC<ITable> = props => {
   let HandleDelete = async (docID: any) => {
     setShow(true)
     setdocID(docID)
-    // await deleteFood(docID)
+  }
+
+  const [search, setSearch] = React.useState<string>("")
+  
+  let filterData = (datas: IData[]) => {
+    return datas.filter(data => data.name.toLowerCase().indexOf(search) > -1 ||
+      data.nutrition.toLowerCase().indexOf(search) > -1 ||
+      data.price.toLowerCase().indexOf(search) > -1 || 
+      data.type.toLowerCase().indexOf(search) > -1)
   }
   
   return (
@@ -59,6 +65,7 @@ const TableData: React.FC<ITable> = props => {
           placeholder="Search for food"
           aria-label="Search for food"
           aria-describedby="basic-addon2"
+          onChange={event => setSearch(event.target.value)}
         />
         <InputGroup.Append>
           <Button variant="outline-secondary" className="btn-default" style={{width:100}}>
@@ -66,12 +73,12 @@ const TableData: React.FC<ITable> = props => {
           </Button>
         </InputGroup.Append>
       </InputGroup>
-      <Table responsive striped bordered hover>
+      <Table id="tableData" responsive striped bordered hover>
         <thead>
           <tr>
-            {arrCol.map(col => {
+            {column.map(col => {
               return (
-                <th style={getLast(arrCol, col)}> 
+                <th style={getLast(column, col)}>
                   {col}
                 </th>
               )
@@ -80,7 +87,7 @@ const TableData: React.FC<ITable> = props => {
         </thead>
         <tbody>
           {data.length > 0 ? 
-            data.map((res, key) => {
+            filterData(data).map((res, key) => {
               params.set("name",res.name)
               params.set("price",res.price)
               params.set("quantity",res.quantity.toString())
