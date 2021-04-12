@@ -1,8 +1,16 @@
 import StatusCodes from 'http-status-codes'
 import { Request, Response } from 'express'
-import {paramMissingError} from '@shared/constants'
+import { paramMissingError } from '@shared/constants'
 const { BAD_REQUEST, CREATED, OK } = StatusCodes
-import { getAllData, setData, getOneData, updateData, deleteData } from '../firestore/methods'
+import {
+  getAllData,
+  setData,
+  getOneData,
+  updateData,
+  deleteData,
+  searchOneData,
+  orderData
+} from '../firestore/methods'
 
 /**
  * Get List of items
@@ -30,7 +38,7 @@ export const addItem = async (req: Request, res: Response) => {
       message: paramMissingError
     })
   }
-  await setData(req.body.name,req.body)
+  await setData(req.body.name, req.body)
   return res.status(CREATED).json({
     message: "Item Added Successfully"
   })
@@ -45,8 +53,27 @@ export const addItem = async (req: Request, res: Response) => {
  */
 export const getOne = async (req: Request, res: Response) => {
   const data = await getOneData(req.params.id)
-  let getData = data.data()
-  return res.status(OK).json(getData)
+  return res.status(OK).json(data)
+}
+
+/**
+ * search one data
+ * @param req 
+ * @param res 
+ */
+export const searchOne = async (req: Request, res: Response) => {
+  const data = await searchOneData(req.params.prop, req.query.q)
+  return res.status(OK).json(data)
+}
+
+/**
+ * order data
+ * @param req 
+ * @param res 
+ */
+export const orderByData = async (req: Request, res: Response) => {
+  const data = await orderData(req.query.orderBy, req.query.format)
+  return res.status(OK).json(data)
 }
 
 /**

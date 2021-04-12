@@ -20,13 +20,32 @@ export const findOne = (docID: any) => {
 }
 
 /**
+ * search One
+ * @param prop 
+ * @returns
+ */
+export const searchOne = (prop: any, value: any) => {
+  return baseAxios().get(`/search/${prop}?q=${value}`)
+}
+
+/**
+ * Order by data
+ * @param prop 
+ * @param order
+ * @returns 
+ */
+export const orderByAll = (prop: any, order: any) => {
+  return baseAxios().get(`/food/list?orderBy=${prop}&format=${order}`)
+}
+
+/**
  * add data to the list
  * 
  * @param data
  * @returns
  */
 export const addFood = (data: IData) => {
-  return baseAxios().post('/food/add',data)
+  return baseAxios().post('/food/add', data)
 }
 
 /**
