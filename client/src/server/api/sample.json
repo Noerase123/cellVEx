@@ -1,0 +1,23 @@
+[
+  {
+      "nutrition": "proteins",
+      "name": "hotdog",
+      "quantity": "4",
+      "type": "Meat",
+      "price": "75"
+  },
+  {
+      "price": "75",
+      "quantity": "5",
+      "nutrition": "Vitamin C",
+      "type": "Fruits",
+      "name": "mango"
+  },
+  {
+      "type": "Vegetables",
+      "quantity": "5",
+      "nutrition": "Vitamin A",
+      "name": "melon",
+      "price": "25"
+  }
+]

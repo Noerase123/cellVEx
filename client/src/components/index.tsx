@@ -1,12 +1,14 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Content from './container/content'
 import NavHeader from './navheader/NavHeader'
 import Header from './header/Header'
 import CreateInput from './create/Create'
 import TableData from './table/TableData'
+import {store} from '../redux/store'
 import { IData, arrCol } from '../interface/tableData/tabledata'
 import { foodList, addFood } from '../server/api/foodServices'
 import background from '../bg.jpg'
+import '../assets/css/index.css'
 
 const Home: React.FC = () => {
 
@@ -22,22 +24,19 @@ const Home: React.FC = () => {
     }
   }
   useEffect(() => {
+    let state = store.getState().updated
+    console.log(state)
     fetchFood()
   }, [])
 
   let fontStyle = {
     fontFamily: '"Times New Roman", Times, serif'
   }
-  let bgStyle = {
-    width: 1350,
-    height: 200,
-    opacity: 0.6
-  }
 
   return (
     <div style={fontStyle}>
       <NavHeader title="CRUD"/>
-        <img src={background} style={bgStyle}/>
+        <img src={background} className="imgBg"/>
       <Content>
         <Header title="Food List">
           <CreateInput addMethod={addFood}/>

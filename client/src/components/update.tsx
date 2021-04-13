@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {store} from '../redux/store'
 import Content from '../components/container/content'
 import NavHeader from '../components/navheader/NavHeader'
 import Header from '../components/header/Header'
@@ -88,6 +89,7 @@ const UpdatePage: React.FC = () => {
     try {
       await updateFood(name, payload)
       history.push("/")
+      store.dispatch({type: 'updated'})
     }
     catch (error) {
       console.log(error)
