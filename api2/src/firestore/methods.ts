@@ -14,7 +14,7 @@ export const getAllData = async () => {
   }
   return snapShot.docs.map(doc => doc.data())
 }
-
+ 
 /**
  * SetData
  * 
