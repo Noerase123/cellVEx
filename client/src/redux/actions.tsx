@@ -1,1 +1,1 @@
-export const UPDATED = 'updated'
+export const CREATED = 'CREATED'

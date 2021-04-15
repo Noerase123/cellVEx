@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { Table, Button, Spinner, InputGroup, FormControl, Form } from 'react-bootstrap'
 import { IData } from '../../interface/tableData/tabledata'
 import CreateModal from '../modal/CreateModal'
-import { deleteFood, orderByAll } from '../../server/api/foodServices'
+import { deleteFood } from '../../server/api/foodServices'
 
 interface ITable {
   data: IData[]
@@ -48,71 +48,40 @@ const TableData: React.FC<ITable> = props => {
     setShow(true)
     setdocID(docID)
   }
-
-  const [newData, setNewData] = React.useState<IData[]>([])
   const [search, setSearch] = React.useState<string>("")
   const [orderBy, setOrderBy] = React.useState<string>("")
 
+  const orderProps: any = {
+    "name": "name",
+    "price": "price",
+    "quantity": "quantity",
+    "type": "type",
+    "nutrients ask": "nutrition"
+  }
+
+  const propSort = (orderingProperty: any) => {
+    return (a: any, b: any) => {
+      if (a[orderingProperty] < b[orderingProperty]) {
+        return -1;
+      }
+      if (a[orderingProperty] > b[orderingProperty]) {
+        return 1;
+      }
+      return 0;
+    }
+  }
+
+  const propFilter = (data:IData) => data.name.toLowerCase().indexOf(search) > -1 ||
+    data.nutrition.toLowerCase().indexOf(search) > -1 ||
+    data.price.toLowerCase().indexOf(search) > -1 ||
+    data.type.toLowerCase().indexOf(search) > -1
+
   let filterData = (datas: IData[]) => {
-    if (orderBy === 'name') {
-      datas = datas.sort((a, b) => {
-        if (a.name < b.name) {
-          return -1;
-        }
-        if (a.name > b.name) {
-          return 1;
-        }
-        return 0;
-      })
-    }
-    else if (orderBy === 'type') {
-      datas = datas.sort((a, b) => {
-        if (a.type < b.type) {
-          return -1;
-        }
-        if (a.type > b.type) {
-          return 1;
-        }
-        return 0;
-      })
-    }
-    else if (orderBy === 'quantity') {
-      datas = datas.sort((a, b) => {
-        if (a.quantity < b.quantity) {
-          return -1;
-        }
-        if (a.quantity > b.quantity) {
-          return 1;
-        }
-        return 0;
-      })
-    }
-    else if (orderBy === 'price') {
-      datas = datas.sort((a, b) => {
-        if (a.price < b.price) {
-          return -1;
-        }
-        if (a.price > b.price) {
-          return 1;
-        }
-        return 0;
-      })
-    }
-    else if (orderBy === 'nutrients ask') {
-      datas = datas.sort((a, b) => {
-        if (a.nutrition < b.nutrition) {
-          return -1;
-        }
-        if (a.nutrition > b.nutrition) {
-          return 1;
-        }
-        return 0;
-      })
-    }
-    return datas.filter(data => data.name.toLowerCase().indexOf(search) > -1 ||
-      data.nutrition.toLowerCase().indexOf(search) > -1 ||
-      data.price.toLowerCase().indexOf(search) > -1 ||
-      data.type.toLowerCase().indexOf(search) > -1)
+    
+    let orderingProps = orderProps[orderBy]
+    datas = datas.sort(propSort(orderingProps))
+
+    return datas.filter(data => propFilter(data))
   }
 
   return (

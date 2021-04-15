@@ -10,16 +10,16 @@ import Update from './components/update'
 
 function App() {
   return (
-    <Router>
-      <Switch>
-          <Route exact path="/">
-            <Index />
-          </Route>
-          <Route path="/update">
-            <Update />
-          </Route>
-        </Switch>
-    </Router>
+      <Router>
+        <Switch>
+            <Route exact path="/">
+              <Index />
+            </Route>
+            <Route path="/update">
+              <Update />
+            </Route>
+          </Switch>
+      </Router>
   );
 }
 

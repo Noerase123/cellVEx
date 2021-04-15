@@ -4,15 +4,17 @@ import NavHeader from './navheader/NavHeader'
 import Header from './header/Header'
 import CreateInput from './create/Create'
 import TableData from './table/TableData'
-import {store} from '../redux/store'
 import { IData, arrCol } from '../interface/tableData/tabledata'
 import { foodList, addFood } from '../server/api/foodServices'
 import background from '../bg.jpg'
 import '../assets/css/index.css'
+import {useSelector} from 'react-redux'
 
 const Home: React.FC = () => {
 
   const [data, setData] = useState<IData[]>([])
+
+  const selector = useSelector((state: any) => state.data)
 
   const fetchFood = async () => {
     try {  
@@ -24,9 +26,8 @@ const Home: React.FC = () => {
     }
   }
   useEffect(() => {
-    let state = store.getState().updated
-    console.log(state)
     fetchFood()
+    alert(selector)
   }, [])
 
   let fontStyle = {

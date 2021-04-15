@@ -4,6 +4,7 @@ import FormVal from '../form/FormVal'
 import CreateModal from '../modal/CreateModal'
 import DropDown from '../dropdown/DropDown'
 import { useHistory } from "react-router-dom";
+import {useDispatch, useSelector} from 'react-redux'
 
 interface ICreate {
   addMethod: (params: any) => void
@@ -11,7 +12,10 @@ interface ICreate {
 
 const CreateInput: React.FC<ICreate> = props => {
   let history = useHistory()
-  let {addMethod} = props
+  let { addMethod } = props
+  
+  const selector = useSelector((state: any) => state.data)
+  const dispatch = useDispatch()
 
   //modal open/close
   const [show, setShow] = useState<boolean>(false);
@@ -38,6 +42,9 @@ const CreateInput: React.FC<ICreate> = props => {
     }
     try {
       await addMethod(payload)
+      dispatch({ type: 'updated' })
+      alert(selector)
+      
       setName("")
       setPrice("")
       setQuantity("")
@@ -64,40 +71,40 @@ const CreateInput: React.FC<ICreate> = props => {
         handleClose={handleClose}
       >
       <FormVal
-              label="Name"
-              type="text"
-              placeholder="Enter name"
-              value={name}
-              onchange={event => setName(event.target.value)}
-            />
-            <FormVal
-              label="Price"
-              type="text"
-              placeholder="Enter price"
-              value={price}
-              onchange={event => setPrice(event.target.value)}
-            />
-            <FormVal
-              label="Quantity"
-              type="number"
-              placeholder="Enter quantity"
-              value={quantity}
-              onchange={event => setQuantity(event.target.value)}
-            />
-            <DropDown
-              label="Type"
-              default_item="Select Type"
-              items={["Fruits", "Vegetables", "Meat", "Snacks"]}
-              onchange={event => setType(event.target.value)}
-              value={type}
-            />
-            <FormVal
-              label="Nutrition Link"
-              type="text"
-              placeholder="Enter Link"
-              value={nutriLink}
-              onchange={event => setNutriLink(event.target.value)}
-            />
+        label="Name"
+        type="text"
+        placeholder="Enter name"
+        value={name}
+        onchange={event => setName(event.target.value)}
+      />
+      <FormVal
+        label="Price"
+        type="text"
+        placeholder="Enter price"
+        value={price}
+        onchange={event => setPrice(event.target.value)}
+      />
+      <FormVal
+        label="Quantity"
+        type="number"
+        placeholder="Enter quantity"
+        value={quantity}
+        onchange={event => setQuantity(event.target.value)}
+      />
+      <DropDown
+        label="Type"
+        default_item="Select Type"
+        items={["Fruits", "Vegetables", "Meat", "Snacks"]}
+        onchange={event => setType(event.target.value)}
+        value={type}
+      />
+      <FormVal
+        label="Nutrition Link"
+        type="text"
+        placeholder="Enter Link"
+        value={nutriLink}
+        onchange={event => setNutriLink(event.target.value)}
+      />
       </CreateModal>
     </div>
   )
