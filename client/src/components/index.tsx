@@ -5,29 +5,27 @@ import Header from './header/Header'
 import CreateInput from './create/Create'
 import TableData from './table/TableData'
 import { IData, arrCol } from '../interface/tableData/tabledata'
-import { foodList, addFood } from '../server/api/foodServices'
+import { addFood } from '../server/api/foodServices'
 import background from '../bg.jpg'
 import '../assets/css/index.css'
-import {useSelector} from 'react-redux'
+import {connect} from 'react-redux'
 
-const Home: React.FC = () => {
+interface IProps {
+  foods: IData[]
+}
+
+const Home: React.FC<IProps> = props => {
+  let { foods } = props
 
   const [data, setData] = useState<IData[]>([])
 
-  const selector = useSelector((state: any) => state.data)
-
-  const fetchFood = async () => {
-    try {  
-      let response = await foodList()
-      setData(response.data)
-    }
-    catch (error) {
-      console.log(error)
-    }
+  const fetchData = async () => {
+    return await foods
   }
+
   useEffect(() => {
-    fetchFood()
-    alert(selector)
+    setInterval(() => 
+    fetchData().then(res => setData(res)), 1000)
   }, [])
 
   let fontStyle = {
@@ -51,4 +49,10 @@ const Home: React.FC = () => {
   )
 }
 
-export default Home
+const mapStateToProps = (state: any) => {
+  return {
+    foods: state.list
+  }
+}
+
+export default connect(mapStateToProps)(Home)

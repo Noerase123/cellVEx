@@ -4,7 +4,6 @@ import FormVal from '../form/FormVal'
 import CreateModal from '../modal/CreateModal'
 import DropDown from '../dropdown/DropDown'
 import { useHistory } from "react-router-dom";
-import {useDispatch, useSelector} from 'react-redux'
 
 interface ICreate {
   addMethod: (params: any) => void
@@ -13,9 +12,6 @@ interface ICreate {
 const CreateInput: React.FC<ICreate> = props => {
   let history = useHistory()
   let { addMethod } = props
-  
-  const selector = useSelector((state: any) => state.data)
-  const dispatch = useDispatch()
 
   //modal open/close
   const [show, setShow] = useState<boolean>(false);
@@ -42,8 +38,6 @@ const CreateInput: React.FC<ICreate> = props => {
     }
     try {
       await addMethod(payload)
-      dispatch({ type: 'updated' })
-      alert(selector)
       
       setName("")
       setPrice("")

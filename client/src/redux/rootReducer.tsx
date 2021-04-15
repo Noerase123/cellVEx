@@ -1,25 +1,8 @@
-import { CREATED } from './actions'
-import { IAction } from './interfaces/interfaces'
+import { combineReducers } from 'redux'
+import indexReducer from './reducers/indexPageReducer'
 
-interface IState {
-  create: boolean
-}
+const rootReducers = combineReducers({
+  list:indexReducer
+})
 
-const initState = {
-  create: true,
-}
-
-const reducer = (state: IState = initState, action: IAction) => {
-  switch (action.type) {
-    case CREATED:
-      const newLoading = state.create = false
-      return {
-        ...state,
-        data: newLoading
-      }
-    default:
-      return state
-  }
-}
-
-export default reducer
+export default rootReducers
